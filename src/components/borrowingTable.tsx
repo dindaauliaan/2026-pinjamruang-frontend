@@ -1,3 +1,14 @@
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Chip,
+    Box,
+} from "@mui/material";
 import type { Borrowing } from "../types/borrowing";
 
 interface Props {
@@ -9,45 +20,59 @@ function BorrowingTable({ data }: Props) {
         return <p>Tidak ada data peminjaman.</p>;
     }
 
+    const getStatusColor = (status: string) => {
+        switch (status) {
+            case "approved":
+                return "success";
+            case "rejected":
+                return "error";
+            case "pending":
+                return "warning";
+            default:
+                return "default";
+        }
+    };
+
     return (
-        <table border={1} cellPadding={8} cellSpacing={0}>
-        <thead>
-            <tr>
-            <th>Nama Peminjam</th>
-            <th>Ruangan</th>
-            <th>Tanggal</th>
-            <th>Keperluan</th>
-            <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {data.map((item) => (
-            <tr key={item.id}>
-                <td>{item.namaPeminjam || "-"}</td>
-                <td>{item.roomName}</td>
-                <td>{item.tanggal}</td>
-                <td>{item.keperluan}</td>
-                <td>
-                <span
-                    style={{
-                    padding: "4px 8px",
-                    borderRadius: "6px",
-                    color: "white",
-                    backgroundColor:
-                        item.status === "approved"
-                        ? "green"
-                        : item.status === "rejected"
-                        ? "red"
-                        : "orange",
-                    }}
-                >
-                    {item.status}
-                </span>
-                </td>
-            </tr>
-            ))}
-        </tbody>
-        </table>
+        <Box sx={{ width: '100%', overflow: 'auto' }}>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} stickyHeader>
+                    <TableHead>
+                        <TableRow sx={{ bgcolor: '#1976d2' }}>
+                            <TableCell sx={{ color: 'black', fontWeight: 'bold' }}>Nama Peminjam</TableCell>
+                            <TableCell sx={{ color: 'black', fontWeight: 'bold' }}>Ruangan</TableCell>
+                            <TableCell sx={{ color: 'black', fontWeight: 'bold' }}>Tanggal</TableCell>
+                            <TableCell sx={{ color: 'black', fontWeight: 'bold' }}>Keperluan</TableCell>
+                            <TableCell sx={{ color: 'black', fontWeight: 'bold' }}>Status</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data.map((item) => (
+                            <TableRow key={item.id} sx={{ '&:hover': { bgcolor: '#f5f5f5' } }}>
+                                <TableCell>{item.namaPeminjam || "-"}</TableCell>
+                                <TableCell>{item.roomName}</TableCell>
+                                <TableCell>
+                                    {new Date(item.tanggal).toLocaleDateString("id-ID", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    })}
+                                </TableCell>
+                                <TableCell>{item.keperluan}</TableCell>
+                                <TableCell>
+                                    <Chip
+                                        label={item.status}
+                                        color={getStatusColor(item.status) as any}
+                                        variant="filled"
+                                        size="small"
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 }
 
