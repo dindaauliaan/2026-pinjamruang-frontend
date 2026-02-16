@@ -40,3 +40,13 @@ export const updateBorrowing = async (
 export const deleteBorrowing = async (id: number) => {
     return axios.delete(`${API_URL}/${id}`);
 };
+// 7. Fungsi Update Status (Approve/Reject)
+export const updateBorrowingStatus = async (
+    id: number,
+    status: "pending" | "approved" | "rejected"
+    ) => {
+    return axios.put(
+        `http://localhost:5281/borrowings/${id}/status`,
+        { status }
+    );
+};
