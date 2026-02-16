@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { useLocation } from "react-router-dom"; //
+import { useLocation } from "react-router-dom";
+import { useState } from "react"; // 1. Tambahkan useState
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,9 +52,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
     }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ searchTerm, setSearchTerm }: any) {
     const location = useLocation();
-    // Logika: Tampilkan hanya jika di halaman List Peminjaman
     const isBookingListPage = location.pathname === "/bookings";
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -77,16 +77,19 @@ export default function SearchAppBar() {
                 PinjamRuang
             </Typography>
             {isBookingListPage && (
-            <Search>
-                <SearchIconWrapper>
-                <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                />
-            </Search>
-            )}
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            {/* 3. Gunakan StyledInputBase saja (lebih rapi untuk Navbar) */}
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </Search>
+                    )}
             </Toolbar>
         </AppBar>
         </Box>
