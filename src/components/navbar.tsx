@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { useLocation } from "react-router-dom"; //
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,6 +52,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     }));
 
 export default function SearchAppBar() {
+    const location = useLocation();
+    // Logika: Tampilkan hanya jika di halaman List Peminjaman
+    const isBookingListPage = location.pathname === "/bookings";
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="sticky" sx={{ mb: 0 }}>
@@ -72,6 +76,7 @@ export default function SearchAppBar() {
             >
                 PinjamRuang
             </Typography>
+            {isBookingListPage && (
             <Search>
                 <SearchIconWrapper>
                 <SearchIcon />
@@ -81,6 +86,7 @@ export default function SearchAppBar() {
                 inputProps={{ 'aria-label': 'search' }}
                 />
             </Search>
+            )}
             </Toolbar>
         </AppBar>
         </Box>

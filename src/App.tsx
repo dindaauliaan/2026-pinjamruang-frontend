@@ -1,16 +1,20 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar";
-import './App.css'
-import BorrowingList from "./pages/BorrowingList"
-
-
+import BorrowingList from "./pages/BorrowingList";
+import BookingCreate from "./pages/BookingCreate";
 
 function App() {
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', margin: 0, padding: 0 }}>
+    <BrowserRouter>
       <Navbar />
-      <BorrowingList />
-    </div>
-  )
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/bookings" replace />} />
+        <Route path="/bookings" element={<BorrowingList />} />
+        <Route path="/bookings/create" element={<BookingCreate />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-export default App
+
+export default App;
