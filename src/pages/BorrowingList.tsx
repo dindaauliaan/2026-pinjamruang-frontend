@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import type { Borrowing } from "../types/borrowing";
 import { getBorrowings } from "../api/borrowingApi";
 import BorrowingTable from "../components/borrowingTable";
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function BorrowingList() {
     const [borrowings, setBorrowings] = useState<Borrowing[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchBorrowings();
@@ -45,6 +47,9 @@ function BorrowingList() {
             boxShadow: 1
         }}
         >
+        <button onClick={() => navigate("/bookings/create")}>
+        + Tambah Peminjaman
+        </button>
         <BorrowingTable data={borrowings} />
         </Box>
     </Box>
