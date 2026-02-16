@@ -48,7 +48,7 @@ function BorrowingList() {
         }}
         >
         <button onClick={() => navigate("/bookings/create")}>
-        + Tambah Peminjaman
+            + Tambah Peminjaman
         </button>
         <BorrowingTable data={borrowings} />
         </Box>

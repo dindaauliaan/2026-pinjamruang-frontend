@@ -1,19 +1,20 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/navbar";
-import BorrowingList from "./pages/BorrowingList";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BookingList from "./pages/BorrowingList";
 import BookingCreate from "./pages/BookingCreate";
+import BookingEdit from "./pages/BookingEdit"; // 👈 PASTIKAN BARIS INI ADA
+import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
-
       <Routes>
-        <Route path="/" element={<Navigate to="/bookings" replace />} />
-        <Route path="/bookings" element={<BorrowingList />} />
+        <Route path="/bookings" element={<BookingList />} />
         <Route path="/bookings/create" element={<BookingCreate />} />
+        {/* Route untuk edit */}
+        <Route path="/edit/:id" element={<BookingEdit />} /> 
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
